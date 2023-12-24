@@ -21,7 +21,15 @@ jobs:
         run: ./scripts/msys2-build
       - name: Test
         run: ./dist/borg.exe -V
-      - uses: actions/upload-artifact@v3
-        with:
-          name: borg-windows
-          path: dist/borg.exe
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: borg-windows
+      #     path: dist/borg.exe
+
+      # Test borg
+      - name: Create repository directory
+        run: |
+          mkdir -p /tmp/backup
+          ls -alR /tmp/backup
+      - name: borg init
+        run: borg init --encryption repokey --debug /tmp/backup
