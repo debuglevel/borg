@@ -36,7 +36,7 @@ jobs:
 
 
 
-  msys2-ucrt64 without pyinstaller:
+  msys2-ucrt64-without-pyinstaller:
     runs-on: windows-latest
     defaults:
       run:
