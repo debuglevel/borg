@@ -33,3 +33,39 @@ jobs:
           ls -alR /tmp/backup
       - name: borg init
         run: ./dist/borg.exe init --encryption repokey --debug /tmp/backup
+
+
+
+  msys2-ucrt64 without pyinstaller:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+      - name: Install dependencies
+        run: ./scripts/msys2-install-deps
+      #- name: Build
+      #  run: ./scripts/msys2-build
+      #- name: Test
+      #  run: ./dist/borg.exe -V
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: borg-windows
+      #     path: dist/borg.exe
+      - name: Install borgmatic
+        run: SETUPTOOLS_USE_DISTUTILS=stdlib pip install .
+
+      # Test borg
+      - name: Create repository directory
+        run: |
+          mkdir -p /tmp/backup
+          ls -alR /tmp/backup
+      - name: borg init
+        run: borg init --encryption repokey --debug /tmp/backup
