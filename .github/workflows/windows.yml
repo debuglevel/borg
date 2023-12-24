@@ -3,6 +3,7 @@ on: [push, pull_request]
 
 jobs:
   msys2-ucrt64:
+    timeout-minutes: 15
     runs-on: windows-latest
     defaults:
       run:
@@ -37,6 +38,7 @@ jobs:
 
 
   msys2-ucrt64-without-pyinstaller:
+    timeout-minutes: 15
     runs-on: windows-latest
     defaults:
       run:
