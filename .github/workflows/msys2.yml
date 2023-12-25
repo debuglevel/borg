@@ -82,6 +82,10 @@ jobs:
         run: borg --version
 
       # Test borg
+      - name: Create source files
+        run: |
+          mkdir -p /tmp/source
+          dd if=/dev/urandom of=test.img bs=1M count 10
       - name: Create repository directory
         run: mkdir -p /tmp/backup
       - name: Show repository directory
@@ -92,7 +96,7 @@ jobs:
       - name: borg init
         run: borg init --debug --encryption none /tmp/backup
       - name: borg create
-        run: borg create --debug /tmp/backup::test01 /var/log
+        run: borg create --debug /tmp/backup::test01 /tmp/source
       - name: borg info
         run: borg info --debug /tmp/backup
       - name: borg list
