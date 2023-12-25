@@ -83,15 +83,6 @@ jobs:
       - name: Print Python platform
         run: python -c 'import sys; print(sys.platform)'
 
-
-      #- name: Build
-      #  run: ./scripts/msys2-build
-      #- name: Test
-      #  run: ./dist/borg.exe -V
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: borg-windows
-      #     path: dist/borg.exe
       - name: Install borgmatic
         run: SETUPTOOLS_USE_DISTUTILS=stdlib pip install .
 
