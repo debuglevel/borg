@@ -46,7 +46,7 @@ jobs:
 
       # Print space usage
       - name: Print space usage
-        run: du -hs /
+        run: df -h
 
       # Install "borg via pip" dependencies
       - name: (Linux only) Install dependencies
@@ -60,7 +60,7 @@ jobs:
 
       # Print space usage
       - name: Print space usage
-        run: du -hs /
+        run: df -h
 
       # Install "borg via pip" Python dependencies
       - name: Install Python requirements
@@ -68,7 +68,7 @@ jobs:
 
       # Print space usage
       - name: Print space usage
-        run: du -hs /
+        run: df -h
 
       # Debug output
       - name: Print Python executable paths
@@ -94,7 +94,7 @@ jobs:
 
       # Print space usage
       - name: Print space usage
-        run: du -hs /
+        run: df -h
 
       # Test borg
       - name: Create source files
