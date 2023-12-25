@@ -43,3 +43,7 @@ jobs:
           ls -alR /tmp/backup
       - name: borg init
         run: borg init --encryption none --debug /tmp/backup
+      - name: borg create
+        run: borg create --debug /tmp/backup::test01 /etc
+      - name: borg list
+        run: borg list --debug /tmp/backup
