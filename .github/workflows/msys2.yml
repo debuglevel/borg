@@ -91,7 +91,7 @@ jobs:
       - name: Show repository directory
         run: |
           ls -alR /tmp/backup
-          du -hs /tmp/backup
+          du -s /tmp/backup
 
       - name: borg init
         run: borg init --debug --encryption none /tmp/backup
@@ -105,4 +105,4 @@ jobs:
       - name: Show repository directory
         run: |
           ls -alR /tmp/backup
-          du -hs /tmp/backup
+          du -s /tmp/backup
