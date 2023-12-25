@@ -92,7 +92,7 @@ jobs:
       - name: borg init
         run: borg init --debug --encryption none /tmp/backup
       - name: borg create
-        run: borg create --debug /tmp/backup::test01 /home/runner
+        run: borg create --debug /tmp/backup::test01 /var/log
       - name: borg info
         run: borg info --debug /tmp/backup
       - name: borg list
