@@ -18,6 +18,13 @@ jobs:
           update: true
       - name: Install dependencies
         run: ./scripts/msys2-install-deps
+      - name: Print Python version
+        run: python --version
+      # `sys.platform` MUST NOT be win32 as borg does not support ssh repositories there.
+      # On a working MSYS2 setup, it should print "cygwin".
+      # If it prints "win32", `msys2_shell.cmd` was probably called and things will not work.
+      - name: Print Python platform
+        run: python -c 'import sys; print(sys.platform)'
       - name: Build
         run: ./scripts/msys2-build
       - name: Test
@@ -53,6 +60,13 @@ jobs:
           update: true
       - name: Install dependencies
         run: ./scripts/msys2-install-deps
+      - name: Print Python version
+        run: python --version
+      # `sys.platform` MUST NOT be win32 as borg does not support ssh repositories there.
+      # On a working MSYS2 setup, it should print "cygwin".
+      # If it prints "win32", `msys2_shell.cmd` was probably called and things will not work.
+      - name: Print Python platform
+        run: python -c 'import sys; print(sys.platform)'
       #- name: Build
       #  run: ./scripts/msys2-build
       #- name: Test
