@@ -83,7 +83,7 @@ jobs:
       - name: Print Python platform
         run: python -c 'import sys; print(sys.platform)'
 
-      - name: Install borgmatic
+      - name: Install borg
         run: SETUPTOOLS_USE_DISTUTILS=stdlib pip install .
 
       # Test borg
