@@ -1,0 +1,101 @@
+name: MSYS2 CI
+on: 
+  - push
+  - pull_request
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2022
+            shell: msys2 {0}
+          - os: ubuntu-22.04
+            shell: bash
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          # Just fetching 1 commit is not enough for setuptools-scm, so we fetch all
+          fetch-depth: 0
+
+      # Windows: Set up MSYS2
+      - name: (Windows only) Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+        if: ${{ matrix.os == 'windows-latest' }}
+
+      # Set up Python
+      - name: (Linux only) Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
+      - name: (Windows only) Set up Python
+        run: pacman --sync --needed --noconfirm python python-pip
+        if: ${{ matrix.os == 'windows-latest' }}
+
+
+      # Install "borg via pip" dependencies
+      - name: (Linux only) Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config build-essential libssl-dev libacl1-dev libxxhash-dev liblz4-dev libzstd-dev
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
+      - name: (Windows only) Install dependencies
+        run: pacman --sync --needed --noconfirm base-devel gcc openssl-devel pkgconf openssh ssh-pageant
+        if: ${{ matrix.os == 'windows-latest' }}
+
+      # Install "borg via pip" Python dependencies
+      - name: Install Python requirements
+        run: python -m pip install --upgrade pip setuptools wheel
+
+      # Debug output
+      - name: Print Python executable paths
+        run: |
+          which python
+          which python3
+          which pip
+          which pip3
+      - name: Print Python version
+        run: python --version
+      # NOTE: On Windows, "sys.platform" MUST NOT be "win32", as borg does not support ssh repositories there.
+      #       On a working MSYS2 setup, it should print "cygwin".
+      - name: Print Python platform (should be "cygwin")
+        run: python -c 'import sys; print(sys.platform)'
+
+      # Install borg from this repository
+      - name: Install borg
+        run: SETUPTOOLS_USE_DISTUTILS=stdlib pip install .
+      - name: Print borg version
+        run: borg --version
+
+      # Test borg
+      - name: Create repository directory
+        run: mkdir -p /tmp/backup
+      - name: Show repository directory
+        run: |
+          ls -alR /tmp/backup
+          du -hs /tmp/backup
+
+      - name: borg init
+        run: borg init --debug --encryption none /tmp/backup
+      - name: borg create
+        run: borg create --debug /tmp/backup::test01 /etc
+      - name: borg info
+        run: borg info --debug /tmp/backup
+      - name: borg list
+        run: borg list --debug /tmp/backup
+
+      - name: Show repository directory
+        run: |
+          ls -alR /tmp/backup
+          du -hs /tmp/backup
