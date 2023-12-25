@@ -73,7 +73,7 @@ jobs:
       - name: Print Python platform (should be "cygwin" on Windows)
         run: python -c 'import sys; print(sys.platform)'
       - name: Print filesystem tree
-        run: tree -p -u --prune -d -s -h
+        run: tree -p -u --prune -d -s -h /
 
       # Install borg from this repository
       - name: Install borg
