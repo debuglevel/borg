@@ -92,4 +92,4 @@ jobs:
           mkdir -p /tmp/backup
           ls -alR /tmp/backup
       - name: borg init
-        run: borg init --encryption repokey --debug /tmp/backup
+        run: borg init --encryption none --debug /tmp/backup
