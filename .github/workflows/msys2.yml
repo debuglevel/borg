@@ -70,7 +70,7 @@ jobs:
         run: python --version
       # NOTE: On Windows, "sys.platform" MUST NOT be "win32", as borg does not support ssh repositories there.
       #       On a working MSYS2 setup, it should print "cygwin".
-      - name: Print Python platform (should be "cygwin")
+      - name: Print Python platform (should be "cygwin" on Windows)
         run: python -c 'import sys; print(sys.platform)'
 
       # Install borg from this repository
@@ -90,7 +90,7 @@ jobs:
       - name: borg init
         run: borg init --debug --encryption none /tmp/backup
       - name: borg create
-        run: borg create --debug /tmp/backup::test01 /home
+        run: borg create --debug /tmp/backup::test01 /home/runner
       - name: borg info
         run: borg info --debug /tmp/backup
       - name: borg list
