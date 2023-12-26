@@ -121,7 +121,7 @@ jobs:
 
       # Uninstall build dependencies again in order to reduce space usage
       - name: (Windows only) Uninstall build dependencies
-        run: pacman -Rs --noconfirm git base-devel gcc openssl-devel pkgconf
+        run: pacman -Rs --noconfirm git ${{ matrix.package-prefix }}{toolchain,pkgconf,zstd,lz4,xxhash,openssl,cython,python-setuptools,python-wheel,python-build,python-pkgconfig,python-packaging,python-msgpack}
         if: ${{ matrix.os == 'windows-latest' }}
 
       # Print space usage
