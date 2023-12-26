@@ -141,13 +141,13 @@ jobs:
           du -s /tmp/backup
 
       - name: borg init
-        run: borg init --debug --encryption none /tmp/backup
+        run: borg init --debug --encryption none //tmp/backup
       - name: borg create
-        run: MSYS2_ARG_CONV_EXCL="*" borg create --debug /tmp/backup::test01 /tmp/source
+        run: MSYS2_ARG_CONV_EXCL="*" borg create --debug //tmp/backup::test01 //tmp/source
       - name: borg info
-        run: borg info --debug /tmp/backup
+        run: borg info --debug //tmp/backup
       - name: borg list
-        run: borg list --debug /tmp/backup
+        run: borg list --debug //tmp/backup
 
       - name: Show repository directory
         run: |
