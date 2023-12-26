@@ -141,7 +141,7 @@ jobs:
           du -s /tmp/backup
 
       - name: borg init
-        run: borg init --debug --encryption none //tmp/backup
+        run: borg init --debug --encryption none /tmp/backup
       - name: borg create
         run: MSYS2_ARG_CONV_EXCL="*" borg create --debug //tmp/backup::test01 //tmp/source
       - name: borg info
