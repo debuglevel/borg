@@ -13,21 +13,27 @@ jobs:
           - os: windows-latest
             shell: msys2 {0}
             msystem: ucrt64
+            package-prefix: mingw-w64-ucrt-x86_64-
           - os: windows-latest
             shell: msys2 {0}
             msystem: clang32
+            package-prefix: mingw-w64-clang-i686-
           - os: windows-latest
             shell: msys2 {0}
             msystem: clang64
+            package-prefix: mingw-w64-clang-x86_64-
           - os: windows-latest
             shell: msys2 {0}
             msystem: mingw32
+            package-prefix: mingw-w64-i686-
           - os: windows-latest
             shell: msys2 {0}
             msystem: mingw64
+            package-prefix: mingw-w64-x86_64-
           - os: windows-latest
             shell: msys2 {0}
             msystem: msys
+            package-prefix: ""
           - os: ubuntu-22.04
             shell: bash
     runs-on: ${{ matrix.os }}
@@ -57,7 +63,7 @@ jobs:
           python-version: '3.11'
         if: ${{ matrix.os == 'ubuntu-22.04' }}
       - name: (Windows only) Set up Python
-        run: pacman --sync --needed --noconfirm python python-pip
+        run: pacman --sync --needed --noconfirm ${{ matrix.package-prefix }}{python,python-pip}
         if: ${{ matrix.os == 'windows-latest' }}
 
       # Print space usage
