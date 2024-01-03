@@ -74,7 +74,7 @@ jobs:
           sudo apt-get install -y pkg-config build-essential libssl-dev libacl1-dev libxxhash-dev liblz4-dev libzstd-dev
         if: ${{ matrix.os == 'ubuntu-22.04' }}
       - name: (Windows only) Install build dependencies
-        run: pacman --sync --needed --noconfirm git base-devel gcc openssl-devel pkgconf liblz4-devel libzstd-devel libxxhash-devel
+        run: pacman --sync --needed --noconfirm git base-devel gcc openssl-devel pkgconf liblz4-devel libzstd-devel libxxhash-devel libffi-devel
         if: ${{ matrix.os == 'windows-latest' }}
       - name: (Windows only) Install runtime dependencies
         run: pacman --sync --needed --noconfirm openssh ssh-pageant
