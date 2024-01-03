@@ -137,18 +137,18 @@ jobs:
           ls -alR /tmp/backup
           du -s /tmp/backup
 
-      - name: borg init
-        run: borg init --debug --encryption none /tmp/backup
+      - name: borg rcreate
+        run: borg rcreate --debug --encryption none /tmp/backup
       - name: borg create
-        run: borg create --debug /tmp/backup::test01 /tmp/source
+        run: borg create --debug /tmp/backup test01 /tmp/source
       - name: Update source files
         run: dd if=/dev/urandom of=/tmp/source/test.img bs=100000000 count=1
       - name: borg create
-        run: borg create --debug /tmp/backup::test02 /tmp/source
-      - name: borg info
-        run: borg info --debug /tmp/backup
-      - name: borg list
-        run: borg list --debug /tmp/backup
+        run: borg create --debug /tmp/backup test02 /tmp/source
+      - name: borg rinfo
+        run: borg rinfo --debug /tmp/backup
+      - name: borg rlist
+        run: borg rlist --debug /tmp/backup
 
       - name: Show repository directory
         run: |
